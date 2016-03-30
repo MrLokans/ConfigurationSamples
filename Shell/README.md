@@ -1,0 +1,1 @@
+Currently I'm using [Guake](https://github.com/Guake/guake) + [ZSH](http://zsh.sourceforge.net/) + [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) on a daily basis.
