@@ -19,3 +19,6 @@
 + sublimelinter-jshint:
     - https://github.com/SublimeLinter/SublimeLinter-jshint
 
++ sublimelinter-annotations:
+    - https://github.com/SublimeLinter/SublimeLinter-annotations
+

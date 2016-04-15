@@ -1,5 +1,4 @@
 {
-	// ============== {{ section }} ==============
 
 	// ============== General ==============
     // The number of spaces a tab is considered equal to
@@ -11,13 +10,12 @@
 	[
 		"Vintage"
 	],
-	// ============== General ==============
-
 
 	// ============== UI ==============
 	"always_show_minimap_viewport": true,
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Material Theme/schemes/Material-Theme-Darker.tmTheme",
+	"color_scheme": "Packages/User/SublimeLinter/Solarized (Light) (SL).tmTheme",
+	"font_size": 11,
 	"indent_guide_options":
 	[
 		"draw_normal",
@@ -26,16 +24,18 @@
 	"line_padding_bottom": 2,
 	"line_padding_top": 2,
 	"overlay_scroll_bars": "enabled",
-	"theme": "Material-Theme.sublime-theme",
 
 	"indent_guide_options":
 	[
 		"draw_normal",
 		"draw_active"
 	],
-	// ============== UI ==============
 
-
-
+	// ============== Plugins =========
+	"linters": {
+    "annotations": {
+        "warnings": ["RETHINK", ],
+        "errors": ["WTF?", "OMG!"]
+    }
 }
-
+}
