@@ -100,3 +100,5 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # 'fuck' utility
 eval $(thefuck --alias)
+export WORKON_HOME=~/venvs
+source /usr/bin/virtualenvwrapper.sh
