@@ -22,3 +22,8 @@
 + sublimelinter-annotations:
     - https://github.com/SublimeLinter/SublimeLinter-annotations
 
++ autodocstrings:
+    - https://github.com/KristoforMaynard/SublimeAutoDocstring
+
++ GitGutter:
+    - https://github.com/jisaacks/GitGutter
