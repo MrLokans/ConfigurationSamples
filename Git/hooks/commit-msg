@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+import os
+import re
+import sys
+from typing import Tuple
+
+
+ALLOWED_COMMIT_LENGTH = os.environ.get('ALLOWED_COMMIT_LENGTH', 40)
+# e.g. PROJECT-10
+RE_JIRA_ISSUE_ID = re.compile(r'^([A-Z]+\-\d+|#\d+)')
+
+
+def verify_message_length(commit_message: str) -> str:
+    warning_message = ''
+    message_lines = commit_message.splitlines()
+    message_lines = "".join([l for l in message_lines
+                             if not l.startswith('#')])
+    if len(message_lines) < ALLOWED_COMMIT_LENGTH:
+        warning_message = ('You commit message length is shorter '
+                           'than the existing limit of {length} characters'
+                           .format(length=ALLOWED_COMMIT_LENGTH))
+    return warning_message
+
+
+def verify_issue_presense(commit_message: str) -> str:
+    if not RE_JIRA_ISSUE_ID.match(commit_message):
+        return ('There is no issue number in your commit message. '
+                'Expected format is "PROJECT-1: message" or "#1: message."')
+    return ''
+
+
+def verify_commit_message(commit_message: str) -> Tuple[bool, str]:
+    warnings = []
+    validators = [verify_message_length,
+                  verify_issue_presense]
+    for validator in validators:
+        warning_msg = validator(commit_message)
+        if warning_msg:
+            warnings.append(warning_msg)
+    if not warnings:
+        return True, ''
+    else:
+        return False, '\n'.join(warnings)
+
+
+def main():
+    commit_message_file = sys.argv[1]
+    commit_message = ''
+    with open(commit_message_file, 'r') as f:
+        commit_message = f.read()
+
+    is_valid, message = verify_commit_message(commit_message)
+    if is_valid:
+        sys.exit(0)
+    else:
+        sys.stderr.write(message)
+        sys.stderr.write('\n')
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
