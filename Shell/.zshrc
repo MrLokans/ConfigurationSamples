@@ -1,11 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="theunraveler"
+ZSH_THEME="awesomepanda"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,12 +41,13 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git extract pip python)
+plugins=(archlinux git extract pip python sudo)
 
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
+export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64/:$LD_LIBRARY_PATH
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,14 +88,25 @@ ZSH_HIGHLIGHT_STYLES=(
         'globbing'        'fg=166'
 )
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias -g fupgrade="sudo pacman -Syu && yaourt -Syua --devel"
 alias -g gopy="cd ~/Dropbox/Projects/Python"
 alias -g chr="chromium"
-source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # 'fuck' utility
-eval $(thefuck --alias)
 export WORKON_HOME=~/venvs
-source /usr/bin/virtualenvwrapper.sh
+export EDITOR=nano
+source /usr/local/bin/virtualenvwrapper.sh
+export GOPATH=~/go
+export ANDROID_HOME=/opt/android-sdk
+eval $(thefuck --alias)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/mrlokans/google-cloud-sdk/path.zsh.inc' ]; then source '/home/mrlokans/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/mrlokans/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/mrlokans/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Conda should be included after the virtualenvwrapper
+export PATH=/home/mrlokans/miniconda3/bin:$PATH
