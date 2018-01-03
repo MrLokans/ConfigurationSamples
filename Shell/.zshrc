@@ -1,6 +1,30 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+
+full_upgrade () {
+    if [ ! -f "/etc/os-release" ]; then
+        echo "There is no /etc/os-release file in your system. "
+        echo "Without it we can not get your distro type, sorry."
+        return
+    fi
+    release_like=$(cat /etc/os-release | grep ID_LIKE | cut -d= -f2)
+    case $release_like in 
+        ubuntu)
+            sudo apt-get update; sudo apt-get upgrade;
+        ;;
+        arch)
+            sudo pacman -Syu && yaourt -Syua --devel;
+        ;;
+        rhel)
+            sudo yum update;
+        ;;
+        *)
+            echo "You have an OS distro type ($release_like) we do not know about, sorry."
+        ;;
+    esac
+}
+
 ZSH_THEME="awesomepanda"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -90,7 +114,7 @@ ZSH_HIGHLIGHT_STYLES=(
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-alias -g fupgrade="sudo pacman -Syu && yaourt -Syua --devel"
+alias -g fupgrade="full_upgrade"
 alias -g gopy="cd ~/Dropbox/Projects/Python"
 alias -g chr="chromium"
 
