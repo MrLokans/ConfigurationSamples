@@ -1,7 +1,13 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+GIT_HOOK_LOCATION=$HOME/Dropbox/Projects/Configuration/Git/hooks
+GIT_HOOK_NAMES="commit-msg"
 
+
+###############################################
+# Runs distro-specific package upgrade commands
+###############################################
 full_upgrade () {
     if [ ! -f "/etc/os-release" ]; then
         echo "There is no /etc/os-release file in your system. "
@@ -23,6 +29,29 @@ full_upgrade () {
             echo "You have an OS distro type ($release_like) we do not know about, sorry."
         ;;
     esac
+}
+
+
+###########################################################
+# Install global development hooks into the local git repo.
+# Creates sym-links for scripts in the GIT_HOOK_LOCATION dir.
+###########################################################
+install_git_hooks () {
+    echo "Installing git development hooks"
+    if [ ! -d ".git" ]; then
+        echo "Current dir is not a git repository, aborting..."
+        return
+    fi
+    for hook in $GIT_HOOK_NAMES;
+    do
+        hook_source=$GIT_HOOK_LOCATION/$hook
+        hook_destination=.git/hooks/$hook
+        if [ -L $hook_destination ]; then
+            echo "Hook '$hook' is already installed, skipping."
+        else
+            ln -s $GIT_HOOK_LOCATION/$hook .git/hooks/$hook
+        fi
+    done
 }
 
 ZSH_THEME="awesomepanda"
